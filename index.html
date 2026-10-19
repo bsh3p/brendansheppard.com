@@ -1,12 +1,743 @@
+<!-- brendansheppard.com, home
+     v2.0, 15 Oct 2026: evidence-first rebuild. Proof bar, evidence blocks,
+     first 90 days, how I work, certifications. Years claim corrected. -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brendan Sheppard</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brendan Sheppard - Business Analyst, Brisbane</title>
+<meta name="description" content="Over nine years as a Business Analyst in complex corporate environments." />
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='16' y='23' text-anchor='middle' font-family='sans-serif' font-size='22' font-weight='bold' fill='%23A855F7'>B</text></svg>" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='16' y='23' text-anchor='middle' font-family='sans-serif' font-size='22' font-weight='bold' fill='%237C3AED'>B</text></svg>" media="(prefers-color-scheme: light)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* Site defaults to dark. Runs synchronously before first paint to avoid
+     a flash — only an explicit saved 'light' choice opts out of dark.
+     Kept as a plain inline script (not a module import) specifically so
+     it executes before anything else, including CSS. */
+  (function(){
+    try{
+      var t = localStorage.getItem('theme') || 'dark';
+      if(t !== 'light') document.documentElement.setAttribute('data-theme','dark');
+    }catch(e){
+      document.documentElement.setAttribute('data-theme','dark');
+    }
+  })();
+</script>
+
+  <script type="module" crossorigin src="/assets/main-UUm91_j5.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-f97qquOj.css">
+  <style>
+    /* Patch v1.2, 25 Jul 2026: centre the role/location line under the
+       portrait — it was rendering left-aligned once it wrapped to two
+       lines on narrow screens. Scoped override, not a stylesheet edit. */
+    .hero-caption { text-align: center; }
+    .eyebrow-line-inner {
+      display: inline-flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    /* Patch v1.5, 25 Jul 2026: Email/LinkedIn in the footer duplicate the
+       contact-band CTAs directly above on mobile — hide on small screens */
+    @media (max-width: 600px) {
+      footer .footer-links { display: none; }
+    }
+    /* Patch v1.5: Core Skills/Industries/Systems/AI cards and their pills
+       aren't interactive, but touch devices were firing a hover/active
+       highlight on tap anyway. pointer-events:none stops the browser
+       matching :hover/:active on these elements at all, so no state
+       change fires regardless of what triggers it underneath. */
+    .facet-card, .chip {
+      pointer-events: none;
+    }
+  /* Patch v1.6: About grid columns should visually end at roughly the
+       same height. Stretch both columns to full row height, then let the
+       right column distribute its cards evenly so there's no dead space
+       at the bottom. */
+    .about-grid { align-items: stretch; }
+    .about-grid > div:last-child {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  /* Patch v1.6: status pill split into two centred lines — title bold +
+       slightly larger, secondary line at base font size */
+    .status-pill-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .status-pill-title {
+      font-size: .95rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .status-pill-sub {
+      font-size: .82rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+  /* Patch v2.0, 15 Oct 2026: new components for the evidence-first
+     rebuild. All styles use existing design tokens only. */
+    /* About section: single column when facet cards are moved out */
+    .about-solo {
+      display: block;
+      max-width: 68ch;
+    }
+    /* Proof bar: three numbered tiles in a row */
+    .proof-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap, 24px);
+    }
+    @media (max-width: 700px) {
+      .proof-bar { grid-template-columns: 1fr; }
+    }
+    .proof-tile {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+    }
+    .proof-num {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--accent-text);
+    }
+    .proof-label {
+      font-size: .9rem;
+      line-height: 1.4;
+      color: var(--fg);
+    }
+    /* Evidence grid: three cards in a row on wide screens */
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap, 24px);
+    }
+    @media (max-width: 800px) {
+      .evidence-grid { grid-template-columns: 1fr; }
+    }
+    .evidence-card .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .evidence-meta {
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent-text);
+    }
+    /* Steps list for First 90 Days */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .steps li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      font-family: var(--font-display);
+      font-size: .85rem;
+      font-weight: 700;
+      background: var(--accent);
+      color: var(--on-accent);
+      margin-top: .1rem;
+    }
+    .step-text {
+      flex: 1;
+      font-size: .95rem;
+      line-height: 1.55;
+      color: var(--fg);
+    }
+    /* Principles grid for How I Work */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 700px) {
+      .principles-grid { grid-template-columns: 1fr; }
+    }
+    .principles-grid .card {
+      padding: 1.25rem;
+    }
+    .principle-num {
+      font-family: var(--font-display);
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent-text);
+      margin-bottom: .35rem;
+    }
+    .principle-text {
+      font-size: .9rem;
+      line-height: 1.5;
+      color: var(--fg);
+    }
+    /* Facet cards intro */
+    .tools-heading {
+      font-size: .95rem;
+      line-height: 1.5;
+      color: var(--fg);
+      margin-bottom: 0;
+    }
+    /* Practical bits card */
+    .practical-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    @media (max-width: 500px) {
+      .practical-grid { grid-template-columns: 1fr; }
+    }
+    .practical-item dt {
+      font-size: .75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent-text);
+      margin-bottom: .2rem;
+    }
+    .practical-item dd {
+      font-size: .9rem;
+      line-height: 1.4;
+      color: var(--fg);
+      margin: 0;
+    }
+    /* Cyan text contrast fix on light theme */
+    :root {
+      --accent-cyan-text: #00707A;
+    }
+    [data-theme="dark"] {
+      --accent-cyan-text: #67e8f9;
+    }
+    /* Facet cards grid: 2 columns wide, 1 column narrow.
+       CRITICAL: never use inline style for grid layouts — inline styles
+       can't respond to media queries and WILL overflow on mobile. */
+    .facet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--gap, 24px);
+    }
+    @media (max-width: 700px) {
+      .facet-grid { grid-template-columns: 1fr; }
+    }
+    /* Envelope button (mobile-only contact drawer trigger).
+       Visible below 600px where the header CTA is hidden.
+       If more nav items are added later, re-enable the hidden
+       hamburger (#hamburger-btn) and remove this button and rule. */
+    #contact-btn-mobile { display: none; }
+    @media (max-width: 599px) {
+      #contact-btn-mobile { display: inline-flex; }
+    }
+    /* Vertically centre the envelope icon inside the button.
+       .hamburger-btn is not a flex container (it used absolute
+       positioning for the three bars), so the SVG won't centre
+       without explicit flex alignment. */
+    #contact-btn-mobile {
+      align-items: center;
+      justify-content: center;
+    }
+  /* Patch v2.1, 17 Oct 2026: Why I'm Different section — three
+       accent-left cards in a row, number above claim. */
+    /* Patch v2.1, 17 Oct 2026: contact band — consistent vertical
+       gap between elements instead of mixed margins. */
+    .contact-band .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .contact-band h2 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3.4vw, 2.2rem);
+      font-weight: 600;
+    }
+    .contact-band p {
+      opacity: .82;
+      max-width: 560px;
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+    .contact-band .btn-row {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      display: flex;
+    }
+    .why-section .container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap, 24px);
+    }
+    @media (max-width: 800px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+    .card-accent-left {
+      border-left: 4px solid var(--accent);
+      padding-left: 22px;
+    }
+    .why-card {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .why-num {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--accent-text);
+    }
+    .why-claim {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--fg-heading, var(--fg));
+    }
+    .why-body {
+      font-size: .875rem;
+      line-height: 1.55;
+      color: var(--fg);
+    }
+  /* Patch v2.2, 19 Oct 2026: balance whitespace above and below the logo
+     marquee. The hero contributes ~80px bottom padding and the first
+     .section contributes ~104px top, so the band needs ~20px more top
+     than bottom padding for the perceived gaps to match. */
+    .logo-section {
+      padding: clamp(36px, 4.5vw, 56px) 0 clamp(16px, 2.5vw, 32px);
+    }
+  </style>
 </head>
 <body>
-    <h1>Brendan Sheppard</h1>
-    <!-- Drop your portfolio HTML here -->
+  <div class="bg-bloom" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+    <header class="header" id="header">
+    <div class="header-left">
+      <a href="/index.html" class="site-logo" aria-label="Brendan Sheppard — home">Brendan Sheppard</a>
+    </div>
+    <div class="header-right">
+      <button class="theme-btn" id="theme-toggle-desktop" title="Toggle theme" aria-label="Toggle light or dark theme">
+        <svg class="theme-icon" id="theme-icon-desktop" viewBox="0 0 24 24"></svg>
+      </button>
+      <button type="button" class="btn btn-primary cta-trigger" id="contact-trigger-desktop" aria-haspopup="dialog">Get in Touch</button>
+      <button type="button" class="hamburger-btn" id="hamburger-btn" aria-label="Open menu" style="display:none" aria-expanded="false" aria-controls="mobile-nav">
+        <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+      </button>
+      <!-- Mobile-only envelope button: opens the contact drawer directly
+           instead of a hamburger menu with only one option (Get in Touch).
+           If more nav items are added later, re-enable the hamburger above
+           and remove data-open-contact from this button. -->
+      <button type="button" class="hamburger-btn" id="contact-btn-mobile" data-open-contact aria-label="Get in Touch" title="Get in Touch">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Single-page site: no nav links left to show, so this drawer is now
+       purely the narrow-width (<470px) fallback for Theme + Contact,
+       which is exactly what it still does below their own breakpoints. -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu" hidden>
+    <button type="button" class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="mobile-nav-utility mobile-nav-theme-row">
+      <button class="theme-btn" id="theme-toggle-mobile" title="Toggle theme" aria-label="Toggle light or dark theme">
+        <svg class="theme-icon" id="theme-icon-mobile" viewBox="0 0 24 24"></svg>
+      </button>
+    </div>
+    <button type="button" class="btn btn-primary mobile-nav-contact" id="contact-trigger-mobile">Get in Touch</button>
+  </nav>
+  <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" hidden></div>
+
+
+    <div class="contact-backdrop" id="contact-backdrop" hidden></div>
+  <aside class="contact-drawer" id="contact-drawer" role="dialog" aria-modal="true" aria-labelledby="contact-drawer-title" hidden>
+    <button type="button" class="contact-drawer-close" id="contact-drawer-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="contact-drawer-body">
+      <h2 id="contact-drawer-title" class="contact-item" style="animation-delay:.05s">Get in Touch</h2>
+      <p class="drawer-lead contact-item" style="animation-delay:.1s">The quickest ways to reach me directly.</p>
+
+      <div class="contact-block contact-item" style="animation-delay:.16s">
+        <span class="contact-label">Email</span>
+        <div class="contact-email-row">
+          <a href="mailto:" class="contact-email" id="contact-email-link"></a>
+          <button type="button" class="contact-copy" id="contact-copy-btn" data-copy="" aria-label="Copy email address">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="icon-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="contact-block contact-item" style="animation-delay:.22s">
+        <span class="contact-label">LinkedIn</span>
+        <div class="contact-email-row">
+          <a href="https://www.linkedin.com/in/brendansheppard" target="_blank" rel="noopener noreferrer" class="contact-copy" aria-label="Open LinkedIn profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <h1 class="reveal d1">Over nine years as a Business Analyst in complex corporate environments.</h1>
+          <p class="lead reveal d2">
+            I've worked as both a contractor and FTE delivering value within large transformation and digital projects where quality, compliance and time constraints were critical.
+          </p>
+          <p class="lead-sub reveal d2">
+            If that sounds like the problem you're hiring for, I'd like to hear about it.
+          </p>
+          <div class="hero-ctas reveal d3">
+            <button type="button" class="btn btn-primary" data-open-contact>Start a Conversation</button>
+            <a href="https://www.linkedin.com/in/brendansheppard" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Connect on LinkedIn</a>
+          </div>
+        </div>
+        <div class="hero-media reveal d2">
+          <div class="status-pill status-pill--limited">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="status-pill-text">
+              <strong class="status-pill-title">Wrapping up a contract soon</strong>
+              <span class="status-pill-sub">open to new opportunities</span>
+            </span>
+          </div>
+          <div class="portrait-ring">
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761572854/Headshot_white_tn3o7u.png" alt="Brendan Sheppard" class="portrait" />
+          </div>
+        </div>
+        <p class="hero-caption reveal">
+          <span class="eyebrow-line-inner">
+            <span class="eyebrow-role">Enterprise Business Analyst</span><span class="eyebrow-sep" aria-hidden="true">&middot;</span><span class="eyebrow-loc">Brisbane, Australia</span>
+          </span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Logo marquee -->
+    <section class="logo-section" aria-label="Companies I've worked with">
+      <div class="logo-strip">
+        <div class="marquee-inner">
+          <div class="marquee-track">
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761531976/allianz-black_fhzl8z.svg" alt="Allianz" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532578/budget-direct-black_boldgt.svg" alt="Budget Direct" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532579/fc-black_cxbh7a.svg" alt="Flight Centre" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761540650/fcm-black_yafwon.svg" alt="FCM" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532580/liquid-black_l8fhgy.svg" alt="Liquid Interactive" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532580/pfb-black_d1qsug.svg" alt="People First Bank" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img id="logopairv0-light" src="https://res.cloudinary.com/textac/image/upload/v1783943098/qut-6_ryd2cj.svg" alt="QUT" class="logo-light" loading="lazy" onerror="this.style.display='none'; var d=document.getElementById('logopairv0-dark'); if(d) d.style.display='inline';" />
+            <img id="logopairv0-dark" src="https://res.cloudinary.com/textac/image/upload/v1783943736/qut-6-edited_1_ukhguq.svg" alt="QUT" class="logo-dark" loading="lazy" onerror="this.style.display='none'; var l=document.getElementById('logopairv0-light'); if(l) l.style.display='inline';" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761531951/qbcc-black_f9dvaw.svg" alt="QBCC" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img id="logopairv1-light" src="https://res.cloudinary.com/textac/image/upload/v1761632182/LFG_1_plgryq.svg" alt="LFG" class="logo-light" loading="lazy" onerror="this.style.display='none'; var d=document.getElementById('logopairv1-dark'); if(d) d.style.display='inline';" />
+            <img id="logopairv1-dark" src="https://res.cloudinary.com/textac/image/upload/v1783944142/LFG_Logo_-_White_ijeq2k.svg" alt="LFG" class="logo-dark" loading="lazy" onerror="this.style.display='none'; var l=document.getElementById('logopairv1-light'); if(l) l.style.display='inline';" />
+          </div>
+          <div class="marquee-track" aria-hidden="true">
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761531976/allianz-black_fhzl8z.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532578/budget-direct-black_boldgt.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532579/fc-black_cxbh7a.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761540650/fcm-black_yafwon.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532580/liquid-black_l8fhgy.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761532580/pfb-black_d1qsug.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img id="logopairh0-light" src="https://res.cloudinary.com/textac/image/upload/v1783943098/qut-6_ryd2cj.svg" alt="" aria-hidden="true" class="logo-light" loading="lazy" onerror="this.style.display='none'; var d=document.getElementById('logopairh0-dark'); if(d) d.style.display='inline';" />
+            <img id="logopairh0-dark" src="https://res.cloudinary.com/textac/image/upload/v1783943736/qut-6-edited_1_ukhguq.svg" alt="" aria-hidden="true" class="logo-dark" loading="lazy" onerror="this.style.display='none'; var l=document.getElementById('logopairh0-light'); if(l) l.style.display='inline';" />
+            <img src="https://res.cloudinary.com/textac/image/upload/v1761531951/qbcc-black_f9dvaw.svg" alt="" aria-hidden="true" class="logo-mono" loading="lazy" onerror="this.style.display='none'" />
+            <img id="logopairh1-light" src="https://res.cloudinary.com/textac/image/upload/v1761632182/LFG_1_plgryq.svg" alt="" aria-hidden="true" class="logo-light" loading="lazy" onerror="this.style.display='none'; var d=document.getElementById('logopairh1-dark'); if(d) d.style.display='inline';" />
+            <img id="logopairh1-dark" src="https://res.cloudinary.com/textac/image/upload/v1783944142/LFG_Logo_-_White_ijeq2k.svg" alt="" aria-hidden="true" class="logo-dark" loading="lazy" onerror="this.style.display='none'; var l=document.getElementById('logopairh1-light'); if(l) l.style.display='inline';" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- Why I'm Different -->
+    <section class="section why-section" aria-labelledby="why-title">
+      <div class="container">
+        <h2 class="eyebrow" id="why-title">Why I'm different</h2>
+
+        <div class="why-grid">
+
+          <article class="card card-accent-left why-card reveal d1">
+            <p class="why-num">I'm a challenger</p>
+            <p class="why-body">From individual requirements through to processes and tools; I strive for better outcomes and greater efficiency.</p>
+          </article>
+
+          <article class="card card-accent-left why-card reveal d2">
+            <p class="why-num">10 roles in 5 industries</p>
+            <p class="why-body">I bring a wealth of experience having worked in many different teams and learning different methods and tools along the way.</p>
+          </article>
+
+          <article class="card card-accent-left why-card reveal d3">
+            <p class="why-num">Risk Aversion &amp; Speed</p>
+            <p class="why-body">I've been involved in very large high-profile projects in high risk industries, all while maintaining speed and quality.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="about-copy about-solo">
+          <span class="eyebrow reveal">About</span>
+          <h2 class="section-title reveal">I did the job before I analysed it</h2>
+          <p class="reveal">
+            Born in Sydney, raised in Melbourne and now living in Brisbane for over 20 years. I've travelled to over 30 countries and have one beautiful partner and two beautiful daughters.
+          </p>
+          <p class="reveal">
+            I love AFL, supporting both the men and women of the Kangaroos and Lions.
+          </p>
+          <p class="reveal">
+            My career started in customer-facing operations, so I design with the customer and the people running the process in mind. A good solution meets the business goal, leaves customers better off and lets operational teams do their jobs efficiently.
+          </p>
+          <p class="reveal">
+            I like to make a difference and leave knowing I not only did the job required of me, but also have made at least one contribution towards an improved system or process that lives on.
+          </p>
+          <p class="reveal">
+            I'm comfortable working hybrid or fully remote, and I'm open to contract and permanent opportunities. If you're hiring for a role where clear thinking, practical delivery and a customer-first mindset matter, I'd love to hear from you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
+
+    
+
+    <!-- Facet cards -->
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow reveal">Tools and expertise</span>
+        <h2 class="section-title reveal">The platforms, systems and methods I work with</h2>
+        <div class="facet-grid">
+          <div class="card facet-card reveal d1">
+            <h3>Core Skills</h3>
+            <div class="chips">
+              <span class="chip">Business Analysis</span>
+              <span class="chip">Process Optimisation</span>
+              <span class="chip">Digital Transformation</span>
+              <span class="chip">Automation</span>
+              <span class="chip">Change Management</span>
+              <span class="chip">CX/UX Design</span>
+            </div>
+          </div>
+          <div class="card facet-card reveal d2">
+            <h3>Industries</h3>
+            <div class="chips">
+              <span class="chip">Banking</span>
+              <span class="chip">Government</span>
+              <span class="chip">Insurance</span>
+              <span class="chip">Retail</span>
+              <span class="chip">Higher Education</span>
+            </div>
+          </div>
+          <div class="card facet-card reveal d3">
+            <h3>Systems</h3>
+            <div class="chips">
+              <span class="chip">Salesforce</span>
+              <span class="chip">Jira</span>
+              <span class="chip">Jira Service Management</span>
+              <span class="chip">Confluence</span>
+              <span class="chip">Microsoft 365</span>
+              <span class="chip">Figma</span>
+              <span class="chip">Miro</span>
+              <span class="chip">Visio</span>
+              <span class="chip">LucidChart</span>
+              <span class="chip">Slack</span>
+            </div>
+          </div>
+          <div class="card facet-card reveal d4">
+            <h3>AI and Automation</h3>
+            <div class="chips">
+              <span class="chip">Claude Enterprise</span>
+              <span class="chip">ChatGPT</span>
+              <span class="chip">Gemini</span>
+              <span class="chip">Hermes</span>
+              <span class="chip">Agentforce</span>
+              <span class="chip">n8n</span>
+              <span class="chip">Pabbly</span>
+              <span class="chip">Zapier</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact band -->
+    <section class="section contact-band">
+      <div class="container">
+        <span class="eyebrow reveal">What next</span>
+        <h2 class="reveal">You are probably weighing up a shortlist.</h2>
+        <p class="reveal d1">
+          If my experience looks like a fit for a role or a problem you're working on, I'd like to hear about it.
+        </p>
+        <div class="btn-row reveal d2">
+          <button type="button" class="btn btn-primary" data-open-contact>Get in Touch</button>
+          <a href="https://www.linkedin.com/in/brendansheppard" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Connect on LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+    <footer>
+    <p class="footer-brand">Brendan Sheppard</p>
+    <div class="footer-links">
+      <span class="footer-email-wrap">
+        <a href="mailto:" id="footer-email-link" data-copy="">Email</a>
+        <span class="footer-email-tooltip" id="footer-email-tooltip" role="status"></span>
+      </span>
+      <a href="https://www.linkedin.com/in/brendansheppard" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+    <p class="copyright">&copy; 2026 Brendan Sheppard. All rights reserved.</p>
+  </footer>
+
+
+<!-- click-to-reveal email: the email address is assembled from fragments
+     and only placed into the DOM on user click. The static HTML contains
+     zero trace of the address — scrapers and crawlers find nothing. -->
+  <script>
+    (function() {
+      var parts = ['hello', String.fromCharCode(64), 'brendan', '.', 'pro'];
+      var email = parts.join('');
+
+      /* Drawer: show "Click to reveal" until tapped */
+      var drawerLink = document.getElementById('contact-email-link');
+      if (drawerLink) {
+        drawerLink.textContent = 'Click to reveal';
+        drawerLink.href = '#';
+        drawerLink.style.cursor = 'pointer';
+        drawerLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          this.textContent = email;
+          this.href = 'mailto:' + email;
+          var btn = document.getElementById('contact-copy-btn');
+          if (btn) btn.setAttribute('data-copy', email);
+        });
+      }
+
+      /* Footer: runtime assembly only (link text is "Email", not the
+         address itself, so no click-to-reveal needed) */
+      var footerLink = document.getElementById('footer-email-link');
+      if (footerLink) {
+        footerLink.href = 'mailto:' + email;
+        footerLink.setAttribute('data-copy', email);
+      }
+      var tooltip = document.getElementById('footer-email-tooltip');
+      if (tooltip) tooltip.textContent = 'Copied ' + email;
+    })();
+  </script>
+
+<!-- Smart chip packer: reorders pills into optimal rows for any viewport
+         width. Uses best-fit-decreasing bin packing so each row fills as
+         tightly as possible — no wasted space at the end of a row. -->
+  <script>
+    (function() {
+      'use strict';
+      var GAP = 8; // matches .chips { gap: 8px }
+
+      function measureAndPack(container) {
+        // Force natural widths first (rendered but unconstrained)
+        var chips = Array.from(container.children);
+        if (!chips.length) return;
+        chips.forEach(function(c) { c.style.flex = 'none'; });
+        container.style.display = 'flex';
+        container.style.flexWrap = 'wrap';
+
+        var items = chips.map(function(c) {
+          return { el: c, w: c.offsetWidth };
+        });
+
+        // best-fit decreasing: sort biggest first
+        items.sort(function(a, b) { return b.w - a.w; });
+
+        var cw = container.offsetWidth;
+        var rows = [];
+
+        items.forEach(function(item) {
+          var placed = false;
+          for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var used = row.reduce(function(s, x) { return s + x.w; }, 0);
+            var gaps = row.length * GAP;
+            var room = cw - used - gaps - GAP; // minus the gap this new chip would add
+            if (item.w <= room) {
+              row.push(item);
+              placed = true;
+              break;
+            }
+          }
+          if (!placed) rows.push([item]);
+        });
+
+        // Flatten rows and reorder DOM
+        var ordered = [];
+        rows.forEach(function(row) {
+          row.forEach(function(item) { ordered.push(item.el); });
+        });
+        ordered.forEach(function(el) { container.appendChild(el); });
+      }
+
+      function packAll() {
+        var containers = document.querySelectorAll('.chips');
+        containers.forEach(measureAndPack);
+      }
+
+      var timer;
+      window.addEventListener('resize', function() {
+        clearTimeout(timer);
+        timer = setTimeout(packAll, 120);
+      });
+
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        packAll();
+        document.fonts.ready.then(packAll);
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          packAll();
+          document.fonts.ready.then(packAll);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
