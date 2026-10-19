@@ -332,12 +332,70 @@
       line-height: 1.55;
       color: var(--fg);
     }
+  /* Patch v2.5, 19 Oct 2026: why-card titles on one line. The compiled
+     @max-width:800px grid breakpoint fires while the container is still
+     capped at 48rem, squeezing cards to ~216px and wrapping titles to
+     2-3 lines. Single column until 1025px (same logic as the hero v2.4
+     fix), 3-col after, and cap the title at 1.5rem so the longest title
+     fits one line in the narrowest 3-col card (~294px). */
+    .why-grid { grid-template-columns: 1fr; }
+    .why-num { font-size: 1.5rem; }
+    @media (width >= 1025px) {
+      .why-grid { grid-template-columns: repeat(3, 1fr); }
+    }
   /* Patch v2.2, 19 Oct 2026: balance whitespace above and below the logo
      marquee. The hero contributes ~80px bottom padding and the first
      .section contributes ~104px top, so the band needs ~20px more top
      than bottom padding for the perceived gaps to match. */
     .logo-section {
       padding: clamp(36px, 4.5vw, 56px) 0 clamp(16px, 2.5vw, 32px);
+    }
+  /* Patch v2.3, 19 Oct 2026: on wide screens keep the header controls and
+     the logo marquee aligned with the content column instead of
+     stretching to the viewport edges. The header is position:fixed/inset:0
+     so it always spans the viewport. Its side padding mirrors the
+     .container breakpoints (40/48/64/80/96rem) PLUS the container's inner
+     padding (clamp(20px,4vw,40px)), so the logo and buttons sit exactly
+     on the same text column as the page content. The marquee strip is
+     capped to the same widths and centred. max() keeps a minimum padding
+     so nothing ever jams an edge at the exact breakpoint widths. */
+    .header { padding: 0 clamp(14px, 3vw, 32px); }
+    .logo-strip { max-width: 100%; margin: 0 auto; }
+    @media (width >= 40rem)  { .header { padding: 0 max(calc((100vw - 40rem) / 2 + clamp(20px, 4vw, 40px)), clamp(14px, 3vw, 32px)); }  .logo-strip { max-width: 40rem; } }
+    @media (width >= 48rem)  { .header { padding: 0 max(calc((100vw - 48rem) / 2 + clamp(20px, 4vw, 40px)), clamp(14px, 3vw, 32px)); }  .logo-strip { max-width: 48rem; } }
+    @media (width >= 64rem)  { .header { padding: 0 max(calc((100vw - 64rem) / 2 + clamp(20px, 4vw, 40px)), clamp(14px, 3vw, 32px)); }  .logo-strip { max-width: 64rem; } }
+    @media (width >= 80rem)  { .header { padding: 0 max(calc((100vw - 80rem) / 2 + clamp(20px, 4vw, 40px)), clamp(14px, 3vw, 32px)); }  .logo-strip { max-width: 80rem; } }
+    @media (width >= 96rem)  { .header { padding: 0 max(calc((100vw - 96rem) / 2 + clamp(20px, 4vw, 40px)), clamp(14px, 3vw, 32px)); }  .logo-strip { max-width: 96rem; } }
+  /* Patch v2.4, 19 Oct 2026: hero caption gap under the portrait.
+     The compiled @900px 2-column switch fires while the container is
+     still capped at 48rem (768px), so the media column (271px) is
+     narrower than the 320px portrait and the caption drops 180-220px
+     below the photo. Keep the hero single-column until 1025px, then go
+     2-column with a tighter row gap so the caption sits ~35px under the
+     portrait — matching the pill-to-photo gap above. */
+    @media (width >= 900px) and (width <= 1024px) {
+      .hero-grid { grid-template-columns: 1fr; grid-template-areas: "media" "caption" "copy"; gap: clamp(20px, 4vw, 32px); }
+      .hero-copy { text-align: center; align-self: auto; }
+      .hero-caption { align-self: auto; }
+      .hero h1 { margin-top: 14px; }
+      .hero-ctas { justify-content: center; }
+      .portrait { width: min(260px, 58vw); }
+    }
+    @media (width >= 1025px) {
+      .hero-grid { grid-template: "copy media" "copy caption" / 1.15fr .85fr; align-items: start; column-gap: clamp(28px, 5vw, 64px); row-gap: 35px; }
+      .hero-copy { text-align: left; align-self: center; }
+      .hero-caption { align-self: start; }
+    }
+  /* Patch v2.6, 19 Oct 2026: section padding sweep. The contact band
+     follows the Tools section — both transparent .section — so their
+     paddings stacked (104+104=208px) with no alt-panel to break the
+     whitespace, making the gap above "What next" read too large. Reduce
+     the band's top padding so the perceived gap matches the other
+     sections (~145px desktop, tracked across widths: tools pb 104 +
+     band pt ~40). */
+    .contact-band {
+      padding-top: clamp(24px, 3vw, 40px);
+      padding-bottom: clamp(64px, 9vw, 104px);
     }
   </style>
 </head>
@@ -507,8 +565,8 @@
           </article>
 
           <article class="card card-accent-left why-card reveal d3">
-            <p class="why-num">Risk Aversion &amp; Speed</p>
-            <p class="why-body">I've been involved in very large high-profile projects in high risk industries, all while maintaining speed and quality.</p>
+            <p class="why-num">Built for High-Stakes Delivery</p>
+            <p class="why-body">Large, regulated, high-profile programmes, delivered on time with risks called out and managed.</p>
           </article>
 
         </div>
@@ -583,6 +641,7 @@
               <span class="chip">Visio</span>
               <span class="chip">LucidChart</span>
               <span class="chip">Slack</span>
+              <span class="chip">CMS</span>
             </div>
           </div>
           <div class="card facet-card reveal d4">
