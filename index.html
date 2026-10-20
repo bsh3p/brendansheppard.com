@@ -419,6 +419,10 @@
   /* Patch v2.8, 20 Oct 2026: keep theme toggle visible on mobile. The
      compiled stylesheet hides .theme-btn below 600px. */
     #theme-toggle-desktop { display: grid; }
+    /* Frosted-glass scrolled header — 85% opaque (vs compiled 72%) with
+       heavier 24px blur so the frosted effect is visible through the
+       slight transparency without letting content read through clearly. */
+    .header.scrolled { background: color-mix(in srgb, var(--bg) 85%, transparent); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); }
   </style>
 </head>
 <body>
