@@ -1,6 +1,7 @@
 <!-- brendansheppard.com, home
      v2.0, 15 Oct 2026: evidence-first rebuild. Proof bar, evidence blocks,
-     first 90 days, how I work, certifications. Years claim corrected. -->
+     first 90 days, how I work, certifications. Years claim corrected.
+     v2.9, 20 Oct 2026: Core Skills 'Business Analysis' pinned first. -->
 <!DOCTYPE html>
 <html lang="en-AU">
 <head>
@@ -629,7 +630,7 @@
           <div class="card facet-card reveal d1">
             <h3>Core Skills</h3>
             <div class="chips">
-              <span class="chip">Business Analysis</span>
+              <span class="chip" data-pin="first">Business Analysis</span>
               <span class="chip">Process Optimisation</span>
               <span class="chip">Digital Transformation</span>
               <span class="chip">Automation</span>
@@ -792,6 +793,10 @@
         rows.forEach(function(row) {
           row.forEach(function(item) { ordered.push(item.el); });
         });
+        // Pinned chips (data-pin="first") always stay first — e.g. Core Skills "Business Analysis"
+        var pinned = ordered.filter(function(el) { return el.getAttribute('data-pin') === 'first'; });
+        var rest = ordered.filter(function(el) { return el.getAttribute('data-pin') !== 'first'; });
+        ordered = pinned.concat(rest);
         ordered.forEach(function(el) { container.appendChild(el); });
       }
 
